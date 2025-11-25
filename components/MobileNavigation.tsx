@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Separator } from "@radix-ui/react-separator";
+import { Separator } from "@/components/ui/separator";
 import { navItems } from "@/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -49,7 +49,7 @@ const MobileNavigation = ({
         <SheetTrigger>
           <Image
             src="/assets/icons/menu.svg"
-            alt="Search"
+            alt="Menu"
             width={30}
             height={30}
           />
@@ -75,7 +75,7 @@ const MobileNavigation = ({
           <nav className="mobile-nav">
             <ul className="mobile-nav-list">
               {navItems.map(({ url, name, icon }) => (
-                <Link key={name} href={url} className="lg:w-full">
+                 <Link key={name} href={url} className="lg:w-full" onClick={() => setOpen(false)}>
                   <li
                     className={cn(
                       "mobile-nav-item",
@@ -110,7 +110,7 @@ const MobileNavigation = ({
             >
               <Image
                 src="/assets/icons/logout.svg"
-                alt="logo"
+                alt="logout"
                 width={24}
                 height={24}
               />
