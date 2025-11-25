@@ -17,63 +17,69 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
 
   return (
     <aside className="sidebar">
-      <Link href="/">
+      {/* Logo */}
+      <Link href="/" className="block">
         <Image
           src="/assets/icons/logo-full-brand.svg"
-          alt="logo"
+          alt="Shad Logo Full"
           width={160}
           height={50}
           className="hidden h-auto lg:block"
+          priority
         />
 
         <Image
           src="/assets/icons/logo-brand.svg"
-          alt="logo"
+          alt="Shad Logo"
           width={52}
           height={52}
           className="lg:hidden"
+          priority
         />
       </Link>
 
+      {/* Navigation */}
       <nav className="sidebar-nav">
         <ul className="flex flex-1 flex-col gap-6">
-          {navItems.map(({ url, name, icon }) => (
-            <Link key={name} href={url} className="lg:w-full">
-              <li
-                className={cn(
-                  "sidebar-nav-item",
-                  pathname === url && "shad-active",
-                )}
-              >
-                <Image
-                  src={icon}
-                  alt={name}
-                  width={24}
-                  height={24}
-                  className={cn(
-                    "nav-icon",
-                    pathname === url && "nav-icon-active",
-                  )}
-                />
-                <p className="hidden lg:block">{name}</p>
+          {navItems.map(({ url, name, icon }) => {
+            const isActive = pathname === url;
+
+            return (
+              <li key={name} className="lg:w-full">
+                <Link
+                  href={url}
+                  className={cn("sidebar-nav-item", isActive && "shad-active")}
+                >
+                  <Image
+                    src={icon}
+                    alt={`${name} icon`}
+                    width={24}
+                    height={24}
+                    className={cn("nav-icon", isActive && "nav-icon-active")}
+                  />
+                  <p className="hidden lg:block">{name}</p>
+                </Link>
               </li>
-            </Link>
-          ))}
+            );
+          })}
         </ul>
       </nav>
 
+      {/* Illustration */}
       <Image
         src="/assets/images/files-2.png"
-        alt="logo"
+        alt="Sidebar illustration"
         width={506}
         height={418}
         className="w-full"
+        sizes="(max-width: 768px) 100vw, 400px"
       />
 
+      {/* User Info */}
       <div className="sidebar-user-info">
         <Image
           src={avatar}
-          alt="Avatar"
+          alt={`${fullName} avatar`}
           width={44}
           height={44}
           className="sidebar-user-avatar"
@@ -86,4 +92,5 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
     </aside>
   );
 };
+
 export default Sidebar;
