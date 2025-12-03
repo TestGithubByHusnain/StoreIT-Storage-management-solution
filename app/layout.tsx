@@ -4,6 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "StoreIt",
   description: "StoreIt - The only storage solution you need.",
+  icons: {
+    icon: "/assets/icons/logo-brand.svg",
+    shortcut: "/assets/icons/logo-brand.svg",
+  },
 };
 
 export default function RootLayout({
