@@ -12,19 +12,31 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "100MB",
     },
   },
+
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.pixabay.com",
-      },
+      // Freepik
       {
         protocol: "https",
         hostname: "img.freepik.com",
       },
+      // Pixabay
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com",
+      },
+
+      // Appwrite Main Domain
       {
         protocol: "https",
         hostname: "cloud.appwrite.io",
+      },
+
+      // Appwrite Region-Based Domain (YOUR ERROR)
+      {
+        protocol: "https",
+        hostname: "fra.cloud.appwrite.io",
+        pathname: "/v1/storage/buckets/**",
       },
     ],
   },

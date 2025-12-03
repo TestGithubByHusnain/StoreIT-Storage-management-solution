@@ -1,67 +1,67 @@
 /* eslint-disable no-unused-vars */
 
-declare type FileType = "document" | "image" | "video" | "audio" | "other";
+export type FileType = "document" | "image" | "video" | "audio" | "other";
 
-declare interface ActionType {
+export interface ActionType {
   label: string;
   icon: string;
   value: string;
 }
 
-declare interface SearchParamProps {
-  params?: Promise<SegmentParams>;
+export interface SearchParamProps {
+  params?: Promise<{ [key: string]: string | string[] | undefined }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-declare interface UploadFileProps {
+export interface UploadFileProps {
   file: File;
   ownerId: string;
   accountId: string;
   path: string;
 }
-declare interface GetFilesProps {
+export interface GetFilesProps {
   types: FileType[];
   searchText?: string;
   sort?: string;
   limit?: number;
 }
-declare interface RenameFileProps {
+export interface RenameFileProps {
   fileId: string;
   name: string;
   extension: string;
   path: string;
 }
-declare interface UpdateFileUsersProps {
+export interface UpdateFileUsersProps {
   fileId: string;
   emails: string[];
   path: string;
 }
-declare interface DeleteFileProps {
+export interface DeleteFileProps {
   fileId: string;
   bucketFileId: string;
   path: string;
 }
 
-declare interface FileUploaderProps {
+export interface FileUploaderProps {
   ownerId: string;
   accountId: string;
   className?: string;
 }
 
-declare interface MobileNavigationProps {
+export interface MobileNavigationProps {
   ownerId: string;
   accountId: string;
   fullName: string;
   avatar: string;
   email: string;
 }
-declare interface SidebarProps {
+export interface SidebarProps {
   fullName: string;
   avatar: string;
   email: string;
 }
 
-declare interface ThumbnailProps {
+export interface ThumbnailProps {
   type: string;
   extension: string;
   url: string;
@@ -69,7 +69,7 @@ declare interface ThumbnailProps {
   imageClassName?: string;
 }
 
-declare interface ShareInputProps {
+export interface ShareInputProps {
   file: Models.Document;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (email: string) => void;
