@@ -50,103 +50,96 @@ members. It's a place where people help each other out.
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
 - React 19
-- Next.js 15
-- Appwrite
-- TailwindCSS
-- ShadCN
+# StoreIt — Storage & File Sharing Platform
+
+StoreIt is a modern storage and file-sharing web application built with Next.js 15, React 19, TypeScript and Appwrite. It provides a clean dashboard for uploading, organizing, sharing and downloading files, with user authentication handled via Appwrite email tokens.
+
+This repository contains the full source code for the frontend and server actions used in the demo/tutorial project.
+
+## Key features
+
+- User signup/sign-in with Appwrite email OTP
+- Upload files to Appwrite Storage and save metadata in Appwrite Database
+- View files by type (documents, images, media, others)
+- Rename, delete and share files with other users
+- Download files directly from Appwrite storage
+- Dashboard with usage summary and recent uploads
+
+## Tech stack
+
+- Next.js 15 (App Router)
+- React 19
 - TypeScript
+- Appwrite (Authentication, Storage, Databases)
+- Tailwind CSS + shadcn/ui components
 
-## <a name="features">🔋 Features</a>
+## Getting started
 
-👉 **User Authentication with Appwrite**: Implement signup, login, and logout functionality using Appwrite's authentication system.
+1. Install dependencies
 
-👉 **FIle Uploads**: Effortlessly upload a variety of file types, including documents, images, videos, and audio, ensuring all your important data.
-
-👉 **View and Manage Files**: Users can browse through their uploaded files stored in Appwrite storage, view on a new tab, rename file or delete.
-
-👉 **Download Files**: Users can download their uploaded files giving them instant access to essential documents.
-
-👉 **File Sharing**: Users can easily share their uploaded files with others, enabling collaboration and easy access to important content.
-
-👉 **Dashboard**: Gain insights at a glance with a dynamic dashboard that showcases total and consumed storage, recent uploads, and a summary of files grouped by type.
-
-👉 **Global Search**: Users can quickly find files and shared content across the platform with a robust global search feature.
-
-👉 **Sorting Options**: Organize files efficiently by sorting them by date, name, or size, making file management a breeze.
-
-👉 **Modern Responsive Design**: A fresh and minimalist UI that emphasizes usability, ensuring a clean aesthetic across all devices.
-
-and many more, including the latest **React 19**, **Next.js 15** and **Appwrite** features alongside code architecture and
-reusability
-
-## <a name="quick-start">🤸 Quick Start</a>
-
-Follow these steps to set up the project locally on your machine.
-
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
-
-**Cloning the Repository**
-
-```bash
-git clone https://github.com/JavaScript-Mastery-Pro/storage_management_solution.git
-cd storage_management_solution
-```
-
-**Installation**
-
-Install the project dependencies using npm:
-
-```bash
+```powershell
 npm install
 ```
 
-**Set Up Environment Variables**
-
-Create a new file named `.env.local` in the root of your project and add the following content:
+2. Create a `.env.local` in the project root and add Appwrite configuration:
 
 ```env
 NEXT_PUBLIC_APPWRITE_ENDPOINT="https://cloud.appwrite.io/v1"
-NEXT_PUBLIC_APPWRITE_PROJECT=""
-NEXT_PUBLIC_APPWRITE_DATABASE=""
-NEXT_PUBLIC_APPWRITE_USERS_COLLECTION=""
-NEXT_PUBLIC_APPWRITE_FILES_COLLECTION=""
-NEXT_PUBLIC_APPWRITE_BUCKET=""
-NEXT_APPWRITE_KEY=""
+NEXT_PUBLIC_APPWRITE_PROJECT="<your-project-id>"
+NEXT_PUBLIC_APPWRITE_DATABASE="<your-database-id>"
+NEXT_PUBLIC_APPWRITE_USERS_COLLECTION="<users-collection-id>"
+NEXT_PUBLIC_APPWRITE_FILES_COLLECTION="<files-collection-id>"
+NEXT_PUBLIC_APPWRITE_BUCKET="<files-bucket-id>"
+NEXT_APPWRITE_KEY="<server-key>"
 ```
 
-Replace the values with your actual Appwrite credentials. You can obtain these credentials by signing up &
-creating a new project on the [Appwrite website](https://appwrite.io/).
+Notes:
+- `NEXT_APPWRITE_KEY` is a secret server key (used by server/admin actions). Keep it out of client-side code.
+- Make sure your Appwrite database collections and storage bucket exist and match the field names used in the code (for example the files collection expects attributes like `name`, `type`, `size`, `bucketFileId`, `accountId`, and `users`)
 
-**Running the Project**
+## Run the app
 
-```bash
+```powershell
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+## Build for production
 
-## <a name="links">🔗 Assets</a>
+```powershell
+npm run build
+npm run start
+```
 
-- Assets used in the project can be found [here](https://jsm.dev/gdrive-kit)
+## Available scripts
 
-<a href="https://jsm.dev/gdrive-kit">
-  <img src="public/readme/videokit.png" alt="Video Kit Banner">
-</a>
+- `dev` — run Next.js in development
+- `build` — create production build
+- `start` — serve production build
+- `lint` — run ESLint
 
+## Project structure (important files)
 
-## <a name="more">🚀 More</a>
+- `app/` — Next.js app router pages and layouts
+- `components/` — React components + UI primitives
+- `lib/` — helpers and Appwrite client wrappers (`lib/appwrite`, `lib/actions`)
+- `hooks/` — custom hooks (e.g., `use-toast`)
+- `public/assets/` — images and icons
+- `types/` — shared TypeScript types
 
-**Advance your skills with Next.js Pro Course**
+## Notes & troubleshooting
 
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with
-detailed explanations, cool features, and exercises to boost your skills. Give it a go!
+- Favicon: the app metadata points to `/assets/icons/logo-brand.svg`; if you don't see the icon, clear your browser cache or add a `public/favicon.ico` for maximum compatibility.
+- Appwrite queries: searching in string fields requires a fulltext index in Appwrite. The code includes a safe fallback for environments without a fulltext index, but for best performance set the `users` attribute to an array type and index it in Appwrite.
+- Toasts: the app uses a custom `use-toast` hook — listener registration was corrected to avoid duplicate listeners.
 
-<a href="https://jsm.dev/gdrive-jsmpro" target="_blank">
-  <img src="public/readme/jsmpro.png" alt="Project Banner">
-</a>
+## Contributing
+
+Contributions, bug reports and feature requests are welcome. Open an issue or submit a pull request.
+
+## License
+
+This project doesn't include a license file in the repository. Add a `LICENSE` file if you want to open-source this project.
+
+## Contact
+
+If this repository came from a tutorial, follow the original tutorial resources for step-by-step setup. For private help, provide the steps you ran and any error logs and I can help debug further.
