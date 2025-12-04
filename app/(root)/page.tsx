@@ -30,7 +30,7 @@ const Dashboard = async () => {
         <ul className="dashboard-summary-list">
           {usageSummary.map((summary) => (
             <Link
-              href={summary.url}
+              href={summary.url as string}
               key={summary.title}
               className="dashboard-summary-card"
             >
