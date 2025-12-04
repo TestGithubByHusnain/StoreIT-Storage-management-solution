@@ -73,7 +73,7 @@ export interface ThumbnailProps {
 export interface FileDocument extends Models.Document {
   type: FileType;
   name: string;
-  url: string;
+  url: string | null;
   extension: string;
   size: number;
   owner: string;

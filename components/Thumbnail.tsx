@@ -5,7 +5,7 @@ import { cn, getFileIcon } from "@/lib/utils";
 interface Props {
   type: string;
   extension: string;
-  url?: string;
+  url?: string | null;
   imageClassName?: string;
   className?: string;
 }
@@ -13,16 +13,17 @@ interface Props {
 const Thumbnail = ({
   type,
   extension,
-  url = "",
+  url,
   imageClassName,
   className,
 }: Props) => {
   const isImage = type === "image" && extension !== "svg";
+  const safeUrl = url ?? "";
 
   return (
     <figure className={cn("thumbnail", className)}>
       <Image
-        src={isImage ? url : getFileIcon(extension, type)}
+        src={isImage ? safeUrl : getFileIcon(extension, type)}
         alt="thumbnail"
         width={100}
         height={100}
