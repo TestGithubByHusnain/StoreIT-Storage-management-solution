@@ -110,9 +110,18 @@ export const formatDateTime = (isoString: string | null | undefined) => {
   return `${time}, ${day} ${month}`;
 };
 
+export type SpaceItem = { size: number; latestDate: string | null }
+export type UsageSummaryInput = {
+  document: SpaceItem
+  image: SpaceItem
+  video: SpaceItem
+  audio: SpaceItem
+  other: SpaceItem
+}
+
 export const getFileIcon = (
   extension: string | undefined,
-  type: FileType | string,
+  type: string,
 ) => {
   switch (extension) {
     // Document
@@ -183,7 +192,17 @@ export const constructDownloadUrl = (bucketFileId: string) => {
 };
 
 // DASHBOARD UTILS
-export const getUsageSummary = (totalSpace: any) => {
+export const getUsageSummary = (totalSpace: UsageSummaryInput) => {
+  const videoDate = totalSpace.video.latestDate
+  const audioDate = totalSpace.audio.latestDate
+  let mediaLatestDate: string | null = null
+
+  if (videoDate && audioDate) {
+    mediaLatestDate = videoDate > audioDate ? videoDate : audioDate
+  } else {
+    mediaLatestDate = videoDate ?? audioDate ?? null
+  }
+
   return [
     {
       title: "Documents",
@@ -202,10 +221,7 @@ export const getUsageSummary = (totalSpace: any) => {
     {
       title: "Media",
       size: totalSpace.video.size + totalSpace.audio.size,
-      latestDate:
-        totalSpace.video.latestDate > totalSpace.audio.latestDate
-          ? totalSpace.video.latestDate
-          : totalSpace.audio.latestDate,
+      latestDate: mediaLatestDate,
       icon: "/assets/icons/file-video-light.svg",
       url: "/media",
     },
