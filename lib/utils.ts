@@ -192,7 +192,13 @@ export const constructDownloadUrl = (bucketFileId: string) => {
 };
 
 // DASHBOARD UTILS
-export const getUsageSummary = (totalSpace: UsageSummaryInput) => {
+export const getUsageSummary = (totalSpace: UsageSummaryInput): Array<{
+  title: string;
+  size: number;
+  latestDate: string | null;
+  icon: string;
+  url: string;
+}> => {
   const videoDate = totalSpace.video.latestDate
   const audioDate = totalSpace.audio.latestDate
   let mediaLatestDate: string | null = null
