@@ -6,8 +6,9 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import type { FileDocument } from "@/types/index";
 
-const ImageThumbnail = ({ file }: { file: Models.Document }) => (
+const ImageThumbnail = ({ file }: { file: FileDocument }) => (
   <div className="file-details-thumbnail">
     <Thumbnail type={file.type} extension={file.extension} url={file.url} />
     <div className="flex flex-col">
@@ -24,14 +25,14 @@ const DetailRow = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-export const FileDetails = ({ file }: { file: Models.Document }) => {
+export const FileDetails = ({ file }: { file: FileDocument }) => {
   return (
     <>
       <ImageThumbnail file={file} />
       <div className="space-y-4 px-2 pt-2">
         <DetailRow label="Format:" value={file.extension} />
         <DetailRow label="Size:" value={convertFileSize(file.size)} />
-        <DetailRow label="Owner:" value={file.owner.fullName} />
+        <DetailRow label="Owner:" value={file.owner as string} />
         <DetailRow label="Last edit:" value={formatDateTime(file.$updatedAt)} />
       </div>
     </>
@@ -39,12 +40,25 @@ export const FileDetails = ({ file }: { file: Models.Document }) => {
 };
 
 interface Props {
-  file: Models.Document;
-  onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
+  file: FileDocument;
+  onInputChange: (emails: string[]) => void;
   onRemove: (email: string) => void;
 }
 
 export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
+  // Parse users from JSON string or array
+  const usersList = Array.isArray(file.users)
+    ? file.users
+    : typeof file.users === "string"
+      ? (() => {
+          try {
+            return JSON.parse(file.users);
+          } catch {
+            return [];
+          }
+        })()
+      : [];
+
   return (
     <>
       <ImageThumbnail file={file} />
@@ -63,12 +77,12 @@ export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
           <div className="flex justify-between">
             <p className="subtitle-2 text-light-100">Shared with</p>
             <p className="subtitle-2 text-light-200">
-              {file.users.length} users
+              {usersList.length} users
             </p>
           </div>
 
           <ul className="pt-2">
-            {file.users.map((email: string) => (
+            {usersList.map((email: string) => (
               <li
                 key={email}
                 className="flex items-center justify-between gap-2"

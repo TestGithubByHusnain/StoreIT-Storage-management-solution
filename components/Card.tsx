@@ -1,11 +1,11 @@
-import { Models } from "node-appwrite";
 import Link from "next/link";
 import Thumbnail from "@/components/Thumbnail";
 import { convertFileSize } from "@/lib/utils";
 import FormattedDateTime from "@/components/FormattedDateTime";
 import ActionDropdown from "@/components/ActionDropdown";
+import type { FileDocument } from "@/types/index";
 
-const Card = ({ file }: { file: Models.Document }) => {
+const Card = ({ file }: { file: FileDocument }) => {
   return (
     <Link href={file.url} target="_blank" className="file-card">
       <div className="flex justify-between">
@@ -30,7 +30,7 @@ const Card = ({ file }: { file: Models.Document }) => {
           className="body-2 text-light-100"
         />
         <p className="caption line-clamp-1 text-light-200">
-          By: {file.owner.fullName}
+          By: {file.owner as string}
         </p>
       </div>
     </Link>

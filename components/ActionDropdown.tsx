@@ -30,6 +30,7 @@ import {
 } from "@/lib/actions/file.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { FileDetails, ShareInput } from "@/components/ActionModelContent";
+import type { FileDocument } from "@/types/index";
 
 type LocalActionType = {
   label: string;
@@ -37,7 +38,7 @@ type LocalActionType = {
   value: string;
 };
 
-const ActionDropdown = ({ file }: { file: Models.Document }) => {
+const ActionDropdown = ({ file }: { file: FileDocument }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [action, setAction] = useState<LocalActionType | null>(null);

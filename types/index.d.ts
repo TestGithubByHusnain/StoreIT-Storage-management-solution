@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import type { Models } from "node-appwrite";
 
 export type FileType = "document" | "image" | "video" | "audio" | "other";
 
@@ -69,8 +70,27 @@ export interface ThumbnailProps {
   imageClassName?: string;
 }
 
+export interface FileDocument extends Models.Document {
+  type: FileType;
+  name: string;
+  url: string;
+  extension: string;
+  size: number;
+  owner: string;
+  accountId: string;
+  users: string | string[];
+  bucketFileId: string;
+}
+
+export interface UserDocument extends Models.Document {
+  email: string;
+  name: string;
+  avatar: string;
+  accountId?: string;
+}
+
 export interface ShareInputProps {
-  file: Models.Document;
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  file: FileDocument;
+  onInputChange: (emails: string[]) => void;
   onRemove: (email: string) => void;
 }

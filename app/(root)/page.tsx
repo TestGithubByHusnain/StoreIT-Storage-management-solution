@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Models } from "node-appwrite";
 
 import ActionDropdown from "@/components/ActionDropdown";
 import { Chart } from "@/components/Chart";
@@ -9,6 +8,7 @@ import Thumbnail from "@/components/Thumbnail";
 import { Separator } from "@/components/ui/separator";
 import { getFiles, getTotalSpaceUsed } from "@/lib/actions/file.actions";
 import { convertFileSize, getUsageSummary } from "@/lib/utils";
+import type { FileDocument } from "@/types/index";
 
 const Dashboard = async () => {
   // Fetch files + storage summary in parallel
@@ -68,7 +68,7 @@ const Dashboard = async () => {
 
         {files.length > 0 ? (
           <ul className="mt-5 flex flex-col gap-5">
-            {files.map((file: Models.Document) => (
+            {files.map((file: FileDocument) => (
               <Link
                 href={file.url || "#"}
                 target="_blank"
